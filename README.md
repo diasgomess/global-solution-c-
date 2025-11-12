@@ -1,5 +1,3 @@
-# [Nome do Seu Projeto API] 💻
-
 Este é um projeto de API RESTful desenvolvido com o objetivo de [Breve descrição do objetivo principal do seu projeto].
 
 ## 🚀 Status do Projeto
