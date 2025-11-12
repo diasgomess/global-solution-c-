@@ -1,0 +1,15 @@
+namespace BibliotecaAPI.Models
+{
+    public enum StatusEmprestimo { ATIVO, FINALIZADO, ATRASADO }
+
+    public class Emprestimo
+    {
+        public int Id { get; set; }
+        public string ISBNLivro { get; set; } = string.Empty;
+        public int IdUsuario { get; set; }
+        public DateTime DataEmprestimo { get; set; } = DateTime.Now;
+        public DateTime DataPrevistaDevolucao { get; set; }
+        public DateTime? DataRealDevolucao { get; set; }
+        public StatusEmprestimo Status { get; set; } = StatusEmprestimo.ATIVO;
+    }
+}
