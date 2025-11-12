@@ -8,6 +8,8 @@ builder.Services.AddSingleton<LivroService>();
 builder.Services.AddSingleton<UsuarioService>();
 builder.Services.AddSingleton<EmprestimoService>();
 builder.Services.AddSingleton<RelatorioService>();
+builder.Services.AddSingleton<PromptService>(); 
+
 builder.Services.AddControllers();
 
 // --- ADICIONAR SWAGGER ---
