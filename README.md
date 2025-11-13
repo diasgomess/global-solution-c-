@@ -65,6 +65,8 @@ A API expõe os seguintes recursos na rota base `/api/prompts`:
 
 ---
 
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/5666747b-59e4-4bbf-87c9-61c928008b5b" />
+
 ## 💡 Próximos Passos (Evolução)
 
 Para transformar a simulação em um sistema robusto:
