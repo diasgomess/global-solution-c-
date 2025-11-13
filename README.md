@@ -1,65 +1,74 @@
-Este é um projeto de API RESTful desenvolvido com o objetivo de [Breve descrição do objetivo principal do seu projeto].
+# BibliotecaAPI de Prompts (Prompt Management System)
 
-## 🚀 Status do Projeto
+## 🌟 Contexto do Projeto
 
-| Etapa | Status | Pontuação (Máx. 3.0) |
-| :--- | :--- | :--- |
-| **Modelagem do Domínio e Conexão** | ✅ Concluída | 3.0 |
-| Próximas Etapas | ⏳ Em Andamento | N/A |
+Este projeto, inicialmente baseado em uma API de biblioteca, foi adaptado para funcionar como um **Sistema de Gerenciamento e Versionamento de Prompts** (Prompt Management System).
 
----
+O cenário principal é o desenvolvimento de **Modelos de Inteligência Artificial (IA)**, onde a empresa necessita de uma solução para **versionar, rastrear e gerenciar** as diferentes strings de prompts utilizadas, garantindo reprodutibilidade e facilitando a experimentação e treinamento de modelos.
 
-## 🎯 Requisitos da Etapa 6: Modelagem do Domínio
-
-Esta primeira *branch* (documentada abaixo) foi criada para atender aos seguintes requisitos e pontos:
-
-1. **Modelagem da Classe Prompt**: A entidade central do projeto foi modelada.
-2. **Confirmação da Conexão com Banco de Dados**: Foi estabelecida e confirmada a conexão com o banco de dados utilizando a biblioteca **Dapper**.
-3. **Criação de Branch Específica**: O trabalho desta etapa foi desenvolvido na *branch* `feature/modelagem-dominio`.
+O recurso `Prompt` é a entidade central para rastrear: qual prompt foi usado, por quem (Autor), a qual categoria de modelo/problema ele se aplica e quando foi registrado.
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
+## 💻 Estrutura e Tecnologias
 
-* **Linguagem:** [C# ou outra linguagem]
-* **Framework:** [ASP.NET Core, Node.js/Express, etc.]
-* **Banco de Dados:** [SQL Server, PostgreSQL, MySQL, etc.]
-* **Mapeamento Objeto-Relacional (ORM):** **Dapper**
+O projeto é construído em **ASP.NET Core** (C#) e segue o padrão MVC/Service Layer.
+
+### Entidades Principais
+
+| Entidade | Descrição |
+| :--- | :--- |
+| **Prompt** | Objeto central que armazena a string do prompt (`Conteudo`), o `Titulo`, o `Autor` e a `Categoria`. |
+| **Categoria** | Enumeração usada para classificar o tipo de modelo ou problema (ex: FICCAO, TECNICO, DIDATICO). |
+
+### Camadas
+
+1.  **Models (BibliotecaAPI.Models):** Contém as classes de dados (`Prompt`) e o enum (`Categoria`).
+2.  **Services (BibliotecaAPI.Services):** Contém a lógica de negócios.
+    * **PromptService:** Responsável por gerenciar os prompts. Atualmente usa uma **simulação em memória** (`List<Prompt>`) para armazenamento.
+3.  **Controllers (BibliotecaAPI.Controllers):** Define os endpoints da API.
+    * **PromptsController:** Manipula as requisições HTTP (GET, POST) para a entidade `Prompt`.
 
 ---
 
-## 📂 Detalhes da Branch `feature/modelagem-dominio`
+## 🛠️ Funcionalidades Implementadas (Endpoints)
 
-Esta seção documenta o trabalho realizado para completar a primeira etapa do projeto.
+A API expõe os seguintes recursos na rota base `/api/prompts`:
 
-### 1. Modelagem da Classe `Prompt`
+| Método | Rota | Descrição | Status Codes |
+| :--- | :--- | :--- | :--- |
+| **GET** | `/api/prompts` | Lista todos os prompts cadastrados na memória. | 200 OK, 204 No Content |
+| **POST** | `/api/prompts` | Cadastra um novo prompt. Garante a unicidade pelo **Título**. | 201 Created, 400 Bad Request |
 
-A classe **`Prompt`** foi modelada no arquivo `[Caminho do arquivo, ex: src/Models/Prompt.cs]`.
+### Lógica de Negócio Chave
 
-O modelo inclui os seguintes atributos:
+* **Unicidade do Título:** O `PromptService` implementa uma validação para garantir que não existam dois prompts com o mesmo `Título` (case-insensitive), essencial para a versão do prompt.
+* **Registro de Data:** A data de cadastro (`DataCadastro`) é definida automaticamente pelo serviço no momento da criação, servindo como registro de tempo (timestamp).
 
-| Atributo | Tipo | Descrição |
-| :--- | :--- | :--- |
-| `Id` | `[Tipo de dado]` | Identificador único do Prompt. |
-| `Conteudo` | `string` | O texto principal do Prompt. |
-| `DataCriacao` | `DateTime` | Data e hora em que o Prompt foi criado. |
-| `[Outro Atributo]` | `[Tipo de dado]` | [Descrição] |
+---
 
-### 2. Conexão com Banco de Dados (Dapper)
+## 🚀 Como Executar o Projeto
 
-A conexão com o banco de dados foi configurada e testada.
+1.  **Pré-requisitos:**
+    * .NET SDK (versão compatível com ASP.NET Core).
+2.  **Compilação e Execução:**
+    ```bash
+    # Navegue até o diretório raiz do projeto
+    cd BibliotecaAPI
+    
+    # Execute a aplicação
+    dotnet run
+    ```
+3.  **Acesso à API:**
+    * A API estará disponível em `https://localhost:<port>` (a porta é definida em `launchSettings.json`).
+    * O Swagger/OpenAPI estará disponível em `/swagger` para testar os endpoints.
 
-* **String de Conexão:** A *connection string* está armazenada e gerenciada no arquivo `[Caminho, ex: appsettings.json]`.
-* **Implementação Dapper:** O Dapper foi integrado na camada de repositório (`[Caminho, ex: src/Repositories/PromptRepository.cs]`) para garantir consultas rápidas e diretas ao banco.
-* **Teste de Conexão:** Uma função simples de teste (ex: `CheckConnection()` ou uma primeira consulta SELECT) foi executada com sucesso para confirmar o acesso.
+---
 
-### 3. Comandos Importantes da Branch
+## 💡 Próximos Passos (Evolução)
 
-Para revisar as alterações desta etapa, você pode usar os seguintes comandos:
+Para transformar a simulação em um sistema robusto:
 
-```bash
-# Faz o checkout para a branch de modelagem
-git checkout feature/modelagem-dominio
-
-# Exibe o histórico de commits desta branch
-git log feature/modelagem-dominio
+1.  **Persistência de Dados:** Substituir a lista em memória por um banco de dados real (ex: SQL Server, PostgreSQL) usando **Entity Framework Core**.
+2.  **Endpoints Adicionais:** Implementar `GET` por ID/Título, `PUT` (Atualizar Versão), e `DELETE`.
+3.  **Versionamento Explícito:** Adicionar um campo de número de versão (ex: `Versao: 1.0.0`) na classe `Prompt` e criar lógica de `PUT` para incrementar a versão e/ou arquivar a versão antiga.
