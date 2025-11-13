@@ -1,6 +1,5 @@
 namespace BibliotecaAPI.Models
 {
-    public enum Categoria { FICCAO, TECNICO, DIDATICO }
     public enum StatusLivro { DISPONIVEL, EMPRESTADO, RESERVADO }
 
     public class Livro

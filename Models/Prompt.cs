@@ -4,7 +4,7 @@ namespace BibliotecaAPI.Models
 
     public class Prompt
     {
-        public string Prompt { get; set; } = string.Empty;
+        public string Instrução { get; set; } = string.Empty;
         public string Titulo { get; set; } = string.Empty;
         public string Autor { get; set; } = string.Empty;
         public Categoria Categoria { get; set; }
